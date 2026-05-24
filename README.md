@@ -6,7 +6,7 @@ Fast conserved-site and variant detection from MAF multiple sequence alignments.
 
 - **`go2fix`** — scans a MAF alignment for conserved positions (identical base across ≥ N rows, no Ns, no gaps) and outputs a BED file of conserved intervals.
 - **`go2var`** — scans a MAF alignment for positions where non-reference species diverge from the reference (skipping reference `N` and gap positions), using a JSON config to define species threshold and ordering, and outputs a BED file of variant intervals.
-- **`addpro`** — parses a GTF, emits gene-body + 1 kb upstream promoter intervals as a BED file, renames RefSeq accessions (NC_*.* → chrN), and drops non-standard chromosomes.
+- **`addpro`** — parses a GTF, generates gene-body + 1 kb upstream promoter intervals as a BED file, renames RefSeq accessions (NC_*.* → chrN), and drops non-standard chromosomes.
 
 ---
 
@@ -20,15 +20,23 @@ Fast conserved-site and variant detection from MAF multiple sequence alignments.
 
 ## Install
 
-### Option 1 — install directly from GitHub (recommended)
+### Option 1 — install from PyPI (recommended)
+
+```bash
+pip install gotools
+```
+
+After install, the commands `go2fix`, `go2var`, and `addpro` are on your PATH.
+
+### Option 2 — install directly from GitHub
+
+For the latest unreleased changes on `main`:
 
 ```bash
 pip install git+https://github.com/csgDarwin/gotools.git@main
 ```
 
-After install, the commands `go2fix`, `go2var`, and `addpro` are on your PATH.
-
-### Option 2 — clone and install editable
+### Option 3 — clone and install editable
 
 ```bash
 git clone https://github.com/csgDarwin/gotools.git
@@ -113,7 +121,7 @@ addpro annotation.gtf --no-filter                          # keep all chromosome
 - `--upstream N` — promoter width in bp (default: 1000)
 - `-n / --no-filter` — keep rows whose chromosome name does not start with `chr` (default: drop them)
 
-The BED `name` column contains the gene symbol (`gene_name` attribute, falling back to `gene` then `gene_id`). RefSeq accessions (`NC_000001.11`, `NC_000023.11`, etc.) are automatically renamed to UCSC-style names (`chr1`, `chrX`, etc.) for GRCh38.p14.
+The BED `name` column contains the gene symbol (`gene_name` attribute). RefSeq accessions (`NC_000001.11`, `NC_000023.11`, etc.) are automatically renamed to UCSC-style names (`chr1`, `chrX`, etc.) for GRCh38.p14.
 
 
 ---
